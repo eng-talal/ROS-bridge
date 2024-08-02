@@ -78,6 +78,7 @@ Run the ROS1-ROS2 bridge.
 
 ```bash
 ros2 run ros1_bridge dynamic_bridge
+
 ```
 
 <img src="https://github.com/user-attachments/assets/39ce85e0-ef25-440b-a990-74601f5ef350" alt="Screenshot" width="600">  
@@ -89,7 +90,7 @@ ros2 run ros1_bridge dynamic_bridge
 To verify the bridge is working, you can test the communication between ROS1 and ROS2 nodes.
 
 ### Test with ROS1 Publisher and ROS2 Subscriber
-after [Running the Bridge] (#Running the Bridge) in the previous steps
+after [Running the Bridge](#running-the-bridge) in the previous steps
   
 
 #### 1. ROS1 Publisher:
@@ -117,5 +118,33 @@ ros2 topic echo /chatter
 
 You should see the message from ROS1 appearing in the ROS2 terminal.
 
--
+![Screenshot 2024-08-02 175555](https://github.com/user-attachments/assets/a4499510-cf0a-46d0-9da0-bfc54aeb744c)
 
+
+
+## Troubleshooting 
+
+#### Ensure that both ROS1 and ROS2 environments are properly sourced before building or running the bridge.
+
+#### Check for any missing dependencies or incorrect paths.
+  
+#### If the bridge does not work as expected use the command ```ros2 run ros1_bridge dynamic_bridge --help```
+  
+#### If the message from ROS1 does not appear on the ROS2 terminal, do the following steps:
+
+- check the topic list in ROS2
+
+```bash
+ros2 topic list
+```
+
+if you don't see ```/chatter``` this means that the bridge did not move the topics then go back to the terminal where you run the bridge and Press ctrl-C to terminate and run the following command :
+
+```bash
+ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
+```
+
+and try again to list the topic in the ROS2 terminal to check if ```/chatter``` is appear
+
+- if there is ```/chatter``` topic and  the message does not appear go to  ROS1 terminal and Press ctrl-C to terminate the command :  
+ ```rostopic pub /chatter std_msgs/String "data: 'Hello from ROS1'"``` and run it again
